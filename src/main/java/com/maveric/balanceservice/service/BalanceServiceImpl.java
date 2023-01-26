@@ -1,5 +1,6 @@
 package com.maveric.balanceservice.service;
 
+import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.entity.Balance;
 import com.maveric.balanceservice.exception.AccountIdMismatchException;
 import com.maveric.balanceservice.exception.BalanceIDNotFoundException;
@@ -8,6 +9,9 @@ import com.maveric.balanceservice.repository.BalanceRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transaction;
+import java.util.Optional;
 
 //import static com.maveric.balanceservice.enums.Constants.getCurrentDateTime;
 
@@ -21,18 +25,15 @@ public  class BalanceServiceImpl implements BalanceService {
 
 
 
-
     @Override
-    public void deleteBalanceByAccountId(String accountId, String balanceId) throws BalanceIDNotFoundException, AccountIdMismatchException {
-        Balance balance = repository.findById(balanceId).orElseThrow(
-                () -> new BalanceIDNotFoundException("Balance ID not available")
+    public BalanceDto getBalanceIdByAccountId(String accountId, String balanceID) throws BalanceIDNotFoundException, AccountIdMismatchException {
+        Balance balance = repository.findById(balanceID).orElseThrow(
+                () -> new BalanceIDNotFoundException("Transaction id not available")
         );
         if(accountId.equals(balance.getAccountId())) {
-            repository.deleteById(balanceId);
+            return mapper.entityToDto(balance);
         } else {
-            throw new AccountIdMismatchException("Account ID not available");
+            throw new AccountIdMismatchException("Account Id not available");
         }
     }
-
-
 }
