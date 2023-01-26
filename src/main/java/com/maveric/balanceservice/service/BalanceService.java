@@ -1,10 +1,12 @@
 package com.maveric.balanceservice.service;
 
-import com.maveric.balanceservice.dto.BalanceDto;
-import com.maveric.balanceservice.entity.Balance;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Service;
+import com.maveric.balanceservice.exception.AccountIdMismatchException;
 
 public interface BalanceService {
-    public BalanceDto createBalance(String accountId, BalanceDto balanceDto);
+
+
+
+    void deleteBalanceByAccountId(String accountId, String balanceId) throws AccountIdMismatchException;
+
+//    void deleteTransactionIdByAccountId(String accountId, String transactionId) throws BalanceNotFoundException, AccountIdMismatchException;
 }
