@@ -52,6 +52,7 @@ public class ExceptionControllerAdvisor {
         ErrorDto error = getError(Constants.CURRENCY_ERROR, String.valueOf(HttpStatus.BAD_REQUEST));
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
     private ErrorDto getError(String message , String code){
         ErrorDto error = new ErrorDto();
         error.setCode(code);
@@ -63,10 +64,6 @@ public class ExceptionControllerAdvisor {
 //        ErrorDto error = getErrorMsg(Constants.ACCOUNT_ID_ERROR, String.valueOf(HttpStatus.BAD_REQUEST));
 //        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 //    }
-    private ErrorDto getErrorMsg(String message , String code){
-        ErrorDto error = new ErrorDto();
-        error.setCode(code);
-        error.setMessage(message);
-        return error;}
+
 
 }

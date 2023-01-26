@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BalanceRepository extends MongoRepository<Balance,String>{
-    Balance findByAccountId(String accountId);
+
 }
