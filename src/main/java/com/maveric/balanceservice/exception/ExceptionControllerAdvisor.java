@@ -30,6 +30,8 @@ public class ExceptionControllerAdvisor {
         log.error("{}-{}");
         return errorDto;
     }
+    @ExceptionHandler(BalanceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public static final ErrorDto handleBalanceNotFoundException(BalanceNotFoundException exception) {
         ErrorDto errorDto = new ErrorDto();
         errorDto.setCode(BALANCE_NOT_FOUND_CODE);

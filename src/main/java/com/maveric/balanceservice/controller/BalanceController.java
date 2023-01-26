@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -21,9 +22,8 @@ public class BalanceController {
     BalanceService balanceService;
 
 
-    @DeleteMapping("accounts/{accountId}/balances/{balanceId}")
-    public ResponseEntity<Object> deleteBalance(@PathVariable String accountID){
-        String desc = balanceService.deleteBalance(accountID);
-        return (ResponseEntity<Object>) ResponseEntity.status(HttpStatus.OK);
-    }
+    @GetMapping("accounts/{accountId}/Balances")
+    public List<BalanceDto> getAllTransactionByAccountId(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
+                                                         @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize, @PathVariable("accountId")@Valid String accountId) {
+        return balanceService.getBalanceByAccountId(page, pageSize, accountId);}
 }
