@@ -6,5 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
 public interface BalanceService {
-    public BalanceDto createBalance(String accountId, BalanceDto balanceDto);
+    public BalanceDto updateBalance(String accountId,String balanceId,BalanceDto balanceDto);
+
+    BalanceDto updateBalance(Balance balance, String balanceId);
 }

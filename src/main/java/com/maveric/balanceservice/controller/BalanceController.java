@@ -19,13 +19,11 @@ public class BalanceController {
     @Autowired
     BalanceService balanceService;
 
-    @PostMapping("accounts/{accountId}/balances")
-    public ResponseEntity<BalanceDto> createNewBalance(@PathVariable String accountId,@Valid @RequestBody BalanceDto balanceDto) {
-        log.info("API call to create a new Balance for given Account Id");
-        BalanceDto balanceDtoResponse = balanceService.createBalance(accountId,balanceDto);
-        System.out.println("In controller method");
-        log.info("New Balance Created successfully");
-        return new ResponseEntity<>(balanceDtoResponse, HttpStatus.CREATED);
+    @PutMapping("/accounts/{accountId}/balances/{balanceId}")
+    public ResponseEntity<BalanceDto> updateBalance(@Valid @RequestBody Balance balance, @PathVariable String accountId, @PathVariable String balanceId) {
+        balance.setAccountId(accountId);
+        BalanceDto balanceDetails = balanceService.updateBalance(balance,balanceId);
+        return ResponseEntity.status(HttpStatus.OK).body(balanceDetails);
     }
 
 }

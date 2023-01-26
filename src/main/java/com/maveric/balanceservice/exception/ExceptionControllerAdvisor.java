@@ -57,12 +57,12 @@ public class ExceptionControllerAdvisor {
         error.setCode(code);
         error.setMessage(message);
         return error;}
-    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
-    public ResponseEntity<ErrorDto> handledFormatException(HttpMediaTypeNotAcceptableException e)
-    {
-        ErrorDto error = getErrorMsg(Constants.ACCOUNT_ID_ERROR, String.valueOf(HttpStatus.BAD_REQUEST));
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
+//    public ResponseEntity<ErrorDto> handledFormatException(HttpMediaTypeNotAcceptableException e)
+//    {
+//        ErrorDto error = getErrorMsg(Constants.ACCOUNT_ID_ERROR, String.valueOf(HttpStatus.BAD_REQUEST));
+//        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+//    }
     private ErrorDto getErrorMsg(String message , String code){
         ErrorDto error = new ErrorDto();
         error.setCode(code);

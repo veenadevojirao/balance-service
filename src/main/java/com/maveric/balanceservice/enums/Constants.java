@@ -31,5 +31,5 @@ public class Constants {
     public static final String INTERNAL_SERVER_ERROR_MESSAGE="Server could not resolve your request.";
 
     public  static final String CURRENCY_ERROR="Currency should be Either in INR,DOL,EURO";
-    public  static final String ACCOUNT_ID_ERROR="AccountId should be mandotory";
+//    public  static final String ACCOUNT_ID_ERROR="AccountId should be mandotory";
 }
