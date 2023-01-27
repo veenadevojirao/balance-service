@@ -8,5 +8,6 @@ import org.springframework.stereotype.Service;
 public interface BalanceService {
     public BalanceDto updateBalance(String accountId,String balanceId,BalanceDto balanceDto);
 
-    BalanceDto updateBalance(Balance balance, String balanceId);
+
+//    BalanceDto updateBalance(Balance balance, String balanceId,);
 }

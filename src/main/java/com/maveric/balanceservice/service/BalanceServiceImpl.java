@@ -2,6 +2,7 @@ package com.maveric.balanceservice.service;
 
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.entity.Balance;
+import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
 import com.maveric.balanceservice.exception.BalanceNotFoundException;
 import com.maveric.balanceservice.mapper.BalanceMapper;
 import com.maveric.balanceservice.repository.BalanceRepository;
@@ -19,33 +20,38 @@ public  class BalanceServiceImpl implements BalanceService {
     @Autowired
     BalanceRepository repository;
     @Autowired
-     BalanceMapper mapper;
+    BalanceMapper mapper;
+
+//    @Override
+//    public BalanceDto updateBalance(String accountId, String balanceId, BalanceDto balanceDto) {
+//        return BalanceDto.builder().build();
+//    }
 
     @Override
-    public BalanceDto updateBalance(String accountId, String balanceId, BalanceDto balanceDto) {
-        return BalanceDto.builder().build();
-    }
+    public BalanceDto updateBalance(String accountId,String balanceId,BalanceDto balance) {
+        if ((accountId.equals(balance.getAccountId()))) {
 
-    @Override
-    public BalanceDto updateBalance(Balance balance, String balanceId){
-        Optional<Balance> balanceFromDb = repository.findById(balanceId);
-        if(balanceFromDb.isPresent()) {
-            Balance newBal = balanceFromDb.get();
-            newBal.setAccountId(balance.getAccountId());
-            newBal.setCurrency(balance.getCurrency());
-            newBal.setAmount(balance.getAmount());
+            Optional<Balance> balanceFromDb = repository.findById(balanceId);
+            if (balanceFromDb.isPresent()) {
+                Balance newBal = balanceFromDb.get();
+                newBal.set_id(balance.get_id());
+                newBal.setAccountId(balance.getAccountId());
+                newBal.setCurrency(balance.getCurrency());
+                newBal.setAmount(balance.getAmount());
+                newBal.setUpdatedAt(balance.getUpdatedAt());
+                newBal.setCreatedAt(balance.getCreatedAt());
 
 
-            return mapper.entityToDto(repository.save(newBal));
-        }else{
-            throw  new BalanceNotFoundException(balanceId);
+                return mapper.entityToDto(repository.save(newBal));
+            } else {
+                throw new BalanceNotFoundException("BalanceId is not Exisists For " + balanceId);
+            }
+        } else {
+            throw new BalanceIdNotFoundException("AccountId is not equal");
         }
 
+
     }
-
-
-
-
 }
 
 

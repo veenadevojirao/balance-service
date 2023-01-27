@@ -20,9 +20,9 @@ public class BalanceController {
     BalanceService balanceService;
 
     @PutMapping("/accounts/{accountId}/balances/{balanceId}")
-    public ResponseEntity<BalanceDto> updateBalance(@Valid @RequestBody Balance balance, @PathVariable String accountId, @PathVariable String balanceId) {
+    public ResponseEntity<BalanceDto> updateBalance(@Valid @RequestBody BalanceDto balance, @PathVariable String accountId, @PathVariable String balanceId) {
         balance.setAccountId(accountId);
-        BalanceDto balanceDetails = balanceService.updateBalance(balance,balanceId);
+        BalanceDto balanceDetails = balanceService.updateBalance(accountId,balanceId,balance);
         return ResponseEntity.status(HttpStatus.OK).body(balanceDetails);
     }
 
