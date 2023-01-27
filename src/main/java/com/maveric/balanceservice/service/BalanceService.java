@@ -7,4 +7,6 @@ import org.springframework.stereotype.Service;
 
 public interface BalanceService {
     public BalanceDto createBalance(String accountId, BalanceDto balanceDto);
+
+
 }

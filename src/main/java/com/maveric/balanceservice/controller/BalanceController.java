@@ -20,7 +20,7 @@ public class BalanceController {
     BalanceService balanceService;
 
     @PostMapping("accounts/{accountId}/balances")
-    public ResponseEntity<BalanceDto> createNewBalance(@PathVariable String accountId,@Valid @RequestBody BalanceDto balanceDto) {
+    public ResponseEntity<BalanceDto> createBalance(@PathVariable String accountId,@Valid @RequestBody BalanceDto balanceDto) {
         log.info("API call to create a new Balance for given Account Id");
         BalanceDto balanceDtoResponse = balanceService.createBalance(accountId,balanceDto);
         System.out.println("In controller method");
