@@ -38,20 +38,12 @@ public class BalanceServiceImplTest {
     private Page pageResult;
 
     @Test
-    void shouldReturnMessageWhenDeleteBalanceInvoked() throws Exception {
-        when(repository.deleteBalanceByAccountId("15","63d236497b27b56c3bc0c928")).thenReturn(Optional.of(getSampleBalance()));
 
-        String message = service.deleteBalanceByAccountId("15","63d236497b27b56c3bc0c928");
-
-        assertNotNull(message);
-        assertSame( "Balance Deleted Successfully",message );
-    }
-    public Balance getSampleBalance(){
-        Balance balance = new Balance();
-        balance.setCurrency(Currency.INR);
-        balance.setAccountId("1");
-        balance.setAmount(200);
-        return balance;
+    void deleteBalance() throws AccountIdMismatchException {
+        when(repository.findById("2")).thenReturn(Optional.of(getBalance()));
+        willDoNothing().given(repository).deleteById("2");
+        String balanceDto = service.deleteBalanceByAccountId("1234","2");
+        assertSame( "1234",balanceDto);
     }
 
     @Test

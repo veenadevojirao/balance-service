@@ -23,6 +23,6 @@ public class BalanceController {
                                                                @PathVariable("balanceId") String balanceId)
             throws BalanceIDNotFoundException, AccountIdMismatchException {
         balanceService.deleteBalanceByAccountId(accountId, balanceId);
-        return new ResponseEntity<>("Transaction deleted successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Balance deleted successfully", HttpStatus.OK);
     }
 }

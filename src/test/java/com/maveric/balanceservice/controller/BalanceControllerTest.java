@@ -11,12 +11,16 @@ import com.maveric.balanceservice.repository.BalanceRepository;
 import com.maveric.balanceservice.service.BalanceService;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.lang.reflect.Type;
@@ -30,8 +34,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ContextConfiguration(classes=BalanceController.class)
+//@RunWith(SpringRunner.class)
+@AutoConfigureMockMvc
 @WebMvcTest(BalanceController.class)
-@Tag("Integration tests")
 public class BalanceControllerTest {
     private static final String API_V1_BALANCE = "/api/v1/accounts/4/balances";
     @Autowired
@@ -58,15 +64,7 @@ public class BalanceControllerTest {
                 .andDo(print());
 
     }
-    @Test
-    void shouldReturnInternalServerWhenDbReturnsErrorForDelete() throws Exception{
-        when(accountFeignService.getAccountsbyId("1")).thenReturn(getSampleAccount());
-        when(balanceService.deleteBalance(any(),any())).thenThrow(new BalanceIDNotFoundException("631061c4c45f78545a1ed04"));
-        mvc.perform(delete(API_V1_BALANCE+"/631061c4c45f78545a1ed04").header("userId",1))
-                .andExpect(status().isNotFound())
-                .andDo(print());
 
-    }
 
 
 

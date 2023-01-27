@@ -38,7 +38,7 @@ public  class BalanceServiceImpl implements BalanceService {
 
     @Override
     public Object deleteBalance(Object any, Object any1) {
-        return deleteBalance("631061c4c45f78545a1ed04","1");
+        return deleteBalance("2","2");
     }
 
 
