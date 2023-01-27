@@ -6,7 +6,11 @@ public interface BalanceService {
 
 
 
-    void deleteBalanceByAccountId(String accountId, String balanceId) throws AccountIdMismatchException;
+    String deleteBalanceByAccountId(String accountId, String balanceId) throws AccountIdMismatchException;
+
+    Object deleteBalance(Object any, Object any1);
+
+//    String deleteBalance(String s, String s1);
 
 //    void deleteTransactionIdByAccountId(String accountId, String transactionId) throws BalanceNotFoundException, AccountIdMismatchException;
 }

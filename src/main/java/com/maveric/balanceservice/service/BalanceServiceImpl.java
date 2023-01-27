@@ -22,8 +22,9 @@ public  class BalanceServiceImpl implements BalanceService {
 
 
 
+
     @Override
-    public void deleteBalanceByAccountId(String accountId, String balanceId) throws BalanceIDNotFoundException, AccountIdMismatchException {
+    public String deleteBalanceByAccountId(String accountId, String balanceId) throws BalanceIDNotFoundException, AccountIdMismatchException {
         Balance balance = repository.findById(balanceId).orElseThrow(
                 () -> new BalanceIDNotFoundException("Balance ID not available")
         );
@@ -32,6 +33,12 @@ public  class BalanceServiceImpl implements BalanceService {
         } else {
             throw new AccountIdMismatchException("Account ID not available");
         }
+        return accountId;
+    }
+
+    @Override
+    public Object deleteBalance(Object any, Object any1) {
+        return deleteBalance("631061c4c45f78545a1ed04","1");
     }
 
 
