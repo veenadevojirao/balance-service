@@ -3,6 +3,8 @@ package com.maveric.balanceservice.enums;
 import java.util.Date;
 
 public class Constants {
+
+
     private Constants()
     {
 
@@ -31,5 +33,8 @@ public class Constants {
     public static final String INTERNAL_SERVER_ERROR_MESSAGE="Server could not resolve your request.";
 
     public  static final String CURRENCY_ERROR="Currency should be Either in INR,DOL,EURO";
-    public  static final String ACCOUNT_ID_ERROR="AccountId should be mandotory";
+    public  static final String ACCOUNT_ID_ERROR="AccountId should not be empty";
+
+    public static final String AMOUNT_NOT_BLANK = "Account";
+    public static final String AMOUNT_REGEX = "^[+]?(\\d+\\.?\\d*|\\.\\d+)$";
 }
