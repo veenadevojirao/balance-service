@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface BalanceService {
+
     List<BalanceDto>getBalanceByAccountId(int page, int pageSize, String accountId);
 
+//    List<BalanceDto> getAllBalance(String s, int i, int i1);
 }

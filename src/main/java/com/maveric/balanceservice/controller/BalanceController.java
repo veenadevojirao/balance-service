@@ -22,8 +22,8 @@ public class BalanceController {
     BalanceService balanceService;
 
 
-    @GetMapping("accounts/{accountId}/Balances")
-    public List<BalanceDto> getAllTransactionByAccountId(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
+    @GetMapping("accounts/{accountId}/balances")
+    public List<BalanceDto> getAllBalanceByAccountId(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                                          @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize, @PathVariable("accountId")@Valid String accountId) {
         return balanceService.getBalanceByAccountId(page, pageSize, accountId);}
 }
