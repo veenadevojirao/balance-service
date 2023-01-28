@@ -64,10 +64,6 @@ public class BalanceControllerTest {
                 .andDo(print());
 
     }
-
-
-
-
     public Balance getSampleBalance(){
 
         Balance balance = new Balance();
