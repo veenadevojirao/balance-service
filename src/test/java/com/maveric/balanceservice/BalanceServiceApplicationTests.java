@@ -33,6 +33,7 @@ class BalanceServiceApplicationTests {
 	public static Balance getBalance ()
 	{
 		return Balance.builder()
+				._id("1")
 				.accountId("1234")
 				.currency(Currency.DOLLAR)
 				.amount(1200)
@@ -41,6 +42,7 @@ class BalanceServiceApplicationTests {
 	public static BalanceDto getBalanceDto ()
 	{
 		return BalanceDto.builder()
+				._id("1")
 				.accountId("1234")
 				.amount(1234)
 				.currency(Currency.DOLLAR)

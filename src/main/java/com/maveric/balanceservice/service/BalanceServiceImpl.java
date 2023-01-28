@@ -28,18 +28,20 @@ public  class BalanceServiceImpl implements BalanceService {
 //    }
 
     @Override
-    public BalanceDto updateBalance(String accountId,String balanceId,BalanceDto balance) {
-        if ((accountId.equals(balance.getAccountId()))) {
+    public BalanceDto updateBalance(String accountId,String balanceId,BalanceDto balanceDto) {
+        System.out.println(accountId);
+        System.out.println(balanceDto.getAccountId());
+        if ((accountId.equals(balanceDto.getAccountId()))) {
 
             Optional<Balance> balanceFromDb = repository.findById(balanceId);
             if (balanceFromDb.isPresent()) {
-                Balance newBal = balanceFromDb.get();
-                newBal.set_id(balance.get_id());
-                newBal.setAccountId(balance.getAccountId());
-                newBal.setCurrency(balance.getCurrency());
-                newBal.setAmount(balance.getAmount());
-                newBal.setUpdatedAt(balance.getUpdatedAt());
-                newBal.setCreatedAt(balance.getCreatedAt());
+                Balance newBal = repository.findById(balanceId).orElseThrow(() -> new BalanceNotFoundException("Balance not found"));
+                newBal.set_id(balanceDto.get_id());
+                newBal.setAccountId(balanceDto.getAccountId());
+                newBal.setCurrency(balanceDto.getCurrency());
+                newBal.setAmount(balanceDto.getAmount());
+                newBal.setUpdatedAt(balanceDto.getUpdatedAt());
+                newBal.setCreatedAt(balanceDto.getCreatedAt());
 
 
                 return mapper.entityToDto(repository.save(newBal));

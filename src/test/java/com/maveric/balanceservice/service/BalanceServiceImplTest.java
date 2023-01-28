@@ -9,6 +9,7 @@ import com.maveric.balanceservice.repository.BalanceRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -18,6 +19,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.security.auth.login.AccountNotFoundException;
 import java.util.Optional;
 
+import static com.maveric.balanceservice.BalanceServiceApplicationTests.getBalance;
+import static com.maveric.balanceservice.BalanceServiceApplicationTests.getBalanceDto;
+//import static jdk.jfr.internal.jfc.model.Constraint.any;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -32,33 +36,28 @@ public class BalanceServiceImplTest {
     private BalanceRepository repository;
 
     @Mock
-    private BalanceServiceImpl mapper;
+    private BalanceMapper mapper;
 
     @Mock
     private Page pageResult;
 
 
     @Test
-    void updateAccountDetails_AccountIdNotFound() {
-        when(repository.findById("123")).thenReturn(Optional.empty());
-
-        Throwable error = assertThrows(BalanceNotFoundException.class,()->service.updateBalance("1234","123",getSampleDtoBalance()));  //NOSONAR
-        assertEquals("Balance not found for Id-123",error.getMessage());
+    void updateBalance() {
+        when(repository.findById("2")).thenReturn(Optional.ofNullable(getBalance()));
+        when(mapper.entityToDto(any(Balance.class))).thenReturn(getBalanceDto());
+// when(repository.save(any())).thenReturn(getBalance());
+        BalanceDto BalanceDto = service.updateBalance("1234","2",getBalanceDto());
+        assertSame(BalanceDto.getAccountId(),getBalanceDto().getAccountId());
     }
 
-    public Balance getSampleBalance(){
-        Balance balance = new Balance();
-        balance.setCurrency(Currency.INR);
-        balance.setAccountId("1");
-        balance.setAmount(200);
-        return balance;
-    }
 
-    public BalanceDto getSampleDtoBalance(){
-        BalanceDto balanceDto = new BalanceDto();
-        balanceDto.setCurrency(Currency.INR);
-        balanceDto.setAccountId("1");
-        balanceDto.setAmount(200);
-        return balanceDto;
+    private Balance any(Class<Balance> balanceClass) {
+        return ArgumentMatchers.any();
     }
+    @Test
+    void updateBalance_failure() {
+        Throwable error = assertThrows(BalanceNotFoundException.class,()->service.updateBalance("1234","2",getBalanceDto()));//NOSONAR
+        assertEquals("BalanceId is not Exisists For 2",error.getMessage());    }
+
 }
