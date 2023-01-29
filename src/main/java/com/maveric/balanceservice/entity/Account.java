@@ -9,9 +9,10 @@ import java.util.Date;
 public class Account {
     private String _id;
 
+    private Type accountType;
+
 
     private Type type;
-
 
     private String customerId;
 

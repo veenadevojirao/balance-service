@@ -20,9 +20,7 @@ public class BalanceRepositoryTest {
         Balance balance = balanceRepository.save(getBalance());
         assertEquals("1234",balance.getAccountId());
     }
-
-@Test
-
+    @Test
     public void testFindAll() {
         List<Balance> balance = balanceRepository.findAll();
         assertNotNull(balance);

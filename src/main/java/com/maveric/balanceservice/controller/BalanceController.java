@@ -2,8 +2,7 @@ package com.maveric.balanceservice.controller;
 
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.exception.AccountIdMismatchException;
-import com.maveric.balanceservice.exception.BalanceIDNotFoundException;
-import com.maveric.balanceservice.repository.BalanceRepository;
+import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
 import com.maveric.balanceservice.service.BalanceService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +19,21 @@ public class BalanceController {
 
     @Autowired
     BalanceService balanceService;
-    @Autowired
-    private BalanceRepository balanceRepository;
 
+    @DeleteMapping("accounts/{accountId}/balances/{balanceId}")
+    public ResponseEntity<String> deleteBalanceByAccountId(@PathVariable("accountId") String accountId,
+                                                           @PathVariable("balanceId") String balanceId)
+            throws BalanceIdNotFoundException, AccountIdMismatchException {
+        balanceService.deleteBalanceByAccountId(accountId, balanceId);
+        return new ResponseEntity<>("Balance deleted successfully", HttpStatus.OK);
+    }
 
     @PutMapping("/accounts/{accountId}/balances/{balanceId}")
     public ResponseEntity<BalanceDto> updateBalance(@Valid @RequestBody BalanceDto balanceDto, @PathVariable String accountId, @PathVariable String balanceId) {
 
         BalanceDto balanceDetails = balanceService.updateBalance(accountId, balanceId, balanceDto);
         return ResponseEntity.status(HttpStatus.OK).body(balanceDetails);
+
     }
         @PostMapping("accounts/{accountId}/balances")
         public ResponseEntity<BalanceDto> createBalance(@PathVariable String accountId,@Valid @RequestBody BalanceDto balanceDto) {
