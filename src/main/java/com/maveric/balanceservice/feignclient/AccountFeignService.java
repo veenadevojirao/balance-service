@@ -1,4 +1,4 @@
-package com.maveric.balanceservice.feignAccount;
+package com.maveric.balanceservice.feignclient;
 
 import com.maveric.balanceservice.entity.Account;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -12,7 +12,4 @@ import java.util.List;
 public interface AccountFeignService {
     @GetMapping("/customers/{customerId}/customerAccounts")
     ResponseEntity<List<Account>> getAccountsbyId(@PathVariable String customerId);
-
-
-
 }
