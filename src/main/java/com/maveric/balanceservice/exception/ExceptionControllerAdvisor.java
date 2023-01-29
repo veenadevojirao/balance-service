@@ -3,6 +3,9 @@ package com.maveric.balanceservice.exception;
 import com.maveric.balanceservice.dto.ErrorDto;
 import com.maveric.balanceservice.enums.Constants;
 import org.slf4j.Logger;
+import com.maveric.balanceservice.exception.BalanceAlreadyExistException;
+import com.maveric.balanceservice.exception.BalanceNotFoundException;
+import com.maveric.balanceservice.exception.BalanceIDNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -25,6 +28,15 @@ import static com.maveric.balanceservice.enums.Constants.*;
 public class ExceptionControllerAdvisor {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(ExceptionControllerAdvisor.class);
     String exceptionString="";
+
+
+    @ExceptionHandler(BalanceIdNotFoundException.class)
+    public static final ErrorDto handleBalanceIdNotFoundException(BalanceIdNotFoundException exception) {
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setCode(BALANCE_NOT_FOUND_CODE);
+        errorDto.setMessage(exception.getMessage());
+        return errorDto;
+    }
 
     @ExceptionHandler(BalanceNotFoundException.class)
     public static final ErrorDto handleBalanceNotFoundException(BalanceNotFoundException exception) {
@@ -54,6 +66,13 @@ public class ExceptionControllerAdvisor {
         error.setCode(code);
         error.setMessage(message);
         return error;}
+
+//    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
+//    public ResponseEntity<ErrorDto> handledFormatException(HttpMediaTypeNotAcceptableException e)
+//    {
+//        ErrorDto error = getErrorMsg(Constants.ACCOUNT_ID_ERROR, String.valueOf(HttpStatus.BAD_REQUEST));
+//        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+//    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

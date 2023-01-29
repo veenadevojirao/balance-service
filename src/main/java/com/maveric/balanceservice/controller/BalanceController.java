@@ -23,13 +23,21 @@ public class BalanceController {
     @Autowired
     private BalanceRepository balanceRepository;
 
-    @PostMapping("accounts/{accountId}/balances")
-    public ResponseEntity<BalanceDto> createBalance(@PathVariable String accountId,@Valid @RequestBody BalanceDto balanceDto) {
-        log.info("API call to create a new Balance for given Account Id");
-        BalanceDto balanceDtoResponse = balanceService.createBalance(accountId, balanceDto);
-        System.out.println("In controller method");
-        log.info("New Balance Created successfully");
-        return new ResponseEntity<>(balanceDtoResponse, HttpStatus.CREATED);
-    }
 
-}
+    @PutMapping("/accounts/{accountId}/balances/{balanceId}")
+    public ResponseEntity<BalanceDto> updateBalance(@Valid @RequestBody BalanceDto balanceDto, @PathVariable String accountId, @PathVariable String balanceId) {
+
+        BalanceDto balanceDetails = balanceService.updateBalance(accountId, balanceId, balanceDto);
+        return ResponseEntity.status(HttpStatus.OK).body(balanceDetails);
+    }
+        @PostMapping("accounts/{accountId}/balances")
+        public ResponseEntity<BalanceDto> createBalance(@PathVariable String accountId,@Valid @RequestBody BalanceDto balanceDto) {
+            log.info("API call to create a new Balance for given Account Id");
+            BalanceDto balanceDtoResponse = balanceService.createBalance(accountId, balanceDto);
+            System.out.println("In controller method");
+            log.info("New Balance Created successfully");
+            return new ResponseEntity<>(balanceDtoResponse, HttpStatus.CREATED);
+
+        }
+
+    }

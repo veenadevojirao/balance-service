@@ -10,6 +10,7 @@ import java.util.List;
 import static com.maveric.balanceservice.BalanceServiceApplicationTests.getBalance;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @DataMongoTest
 public class BalanceRepositoryTest {
     @Autowired
@@ -19,7 +20,9 @@ public class BalanceRepositoryTest {
         Balance balance = balanceRepository.save(getBalance());
         assertEquals("1234",balance.getAccountId());
     }
+
 @Test
+
     public void testFindAll() {
         List<Balance> balance = balanceRepository.findAll();
         assertNotNull(balance);

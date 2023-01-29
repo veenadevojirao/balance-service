@@ -5,7 +5,9 @@ import com.maveric.balanceservice.enums.Currency;
 import lombok.*;
 
 import javax.persistence.*;
+
 import javax.validation.Valid;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -19,8 +21,8 @@ import java.util.Date;
 @AllArgsConstructor(access= AccessLevel.PUBLIC)
 public class BalanceDto {
     private String  _id;
-
     @NotNull(message = "accountId should not be empty")
+
     private String accountId;
     @NotNull(message = "amount should not be empty")
     @Min(value =0,message = "ammount should not le lesser than 0")

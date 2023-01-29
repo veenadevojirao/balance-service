@@ -3,9 +3,13 @@ package com.maveric.balanceservice.service;
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.entity.Balance;
 
+import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
+import com.maveric.balanceservice.exception.BalanceNotFoundException;
+
 import com.maveric.balanceservice.exception.AccountIdMismatchException;
 import com.maveric.balanceservice.exception.BalanceAlreadyExistException;
 import com.maveric.balanceservice.exception.BalanceIDNotFoundException;
+
 import com.maveric.balanceservice.mapper.BalanceMapper;
 import com.maveric.balanceservice.repository.BalanceRepository;
 import org.slf4j.Logger;
@@ -21,28 +25,55 @@ public  class BalanceServiceImpl implements BalanceService {
     @Autowired
     BalanceMapper mapper;
 
-
     @Override
-    public BalanceDto createBalance(String accountId, BalanceDto balanceDto) {
-        if ((accountId.equals(balanceDto.getAccountId()))){
-          if(repository.findByAccountId(accountId) == null){
-                Balance balance = mapper.dtoToEntity(balanceDto);
-                //Balance balanceResult = repository.save(balance);
-                log.error("Created new Balance successfully");
-                return mapper.entityToDto(repository.save(balance));
+    public BalanceDto updateBalance(String accountId,String balanceId,BalanceDto balanceDto) {
+        System.out.println(accountId);
+        System.out.println(balanceDto.getAccountId());
+        if ((accountId.equals(balanceDto.getAccountId()))) {
+
+            Optional<Balance> balanceFromDb = repository.findById(balanceId);
+            if (balanceFromDb.isPresent()) {
+                Balance newBal = repository.findById(balanceId).orElseThrow(() -> new BalanceNotFoundException("Balance not found"));
+                newBal.set_id(balanceDto.get_id());
+                newBal.setAccountId(balanceDto.getAccountId());
+                newBal.setCurrency(balanceDto.getCurrency());
+                newBal.setAmount(balanceDto.getAmount());
+                newBal.setUpdatedAt(balanceDto.getUpdatedAt());
+                newBal.setCreatedAt(balanceDto.getCreatedAt());
+
+
+                return mapper.entityToDto(repository.save(newBal));
+            } else {
+                throw new BalanceNotFoundException("BalanceId is not Exisists For " + balanceId);
             }
-            else{
+        } else {
+            throw new BalanceIdNotFoundException("AccountId is not equal");
+        }
+
+    }
+        @Override
+        public BalanceDto createBalance(String accountId, BalanceDto balanceDto) {
+            if ((accountId.equals(balanceDto.getAccountId()))){
+                if(repository.findByAccountId(accountId) == null){
+                    Balance balance = mapper.dtoToEntity(balanceDto);
+                    //Balance balanceResult = repository.save(balance);
+                    log.error("Created new Balance successfully");
+                    return mapper.entityToDto(repository.save(balance));
+                }
+                else{
                     throw new BalanceAlreadyExistException("Balance already exsists exception");
                 }
 
+            }
+            else {
+                throw new BalanceAlreadyExistException("This AccountId Id should be match");
+            }
+
+
         }
-        else {
-            throw new BalanceAlreadyExistException("This AccountId Id should be match");
-        }
 
 
-    }
 
-
+    
 }
 
