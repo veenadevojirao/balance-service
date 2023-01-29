@@ -20,9 +20,6 @@ public  class BalanceServiceImpl implements BalanceService {
     BalanceMapper mapper;
 
 
-
-
-
     @Override
     public String deleteBalanceByAccountId(String accountId, String balanceId) throws BalanceIDNotFoundException, AccountIdMismatchException {
         Balance balance = repository.findById(balanceId).orElseThrow(
