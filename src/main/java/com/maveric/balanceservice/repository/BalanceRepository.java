@@ -11,4 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface BalanceRepository extends MongoRepository<Balance,String> {
+    Object findByAccountIdAndBalanceId(String accountId, String balanceID);
 }

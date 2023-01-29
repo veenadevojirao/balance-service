@@ -10,9 +10,6 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transaction;
-import java.util.Optional;
-
 //import static com.maveric.balanceservice.enums.Constants.getCurrentDateTime;
 
 @Service
@@ -28,7 +25,7 @@ public  class BalanceServiceImpl implements BalanceService {
     @Override
     public BalanceDto getBalanceIdByAccountId(String accountId, String balanceID) throws BalanceIDNotFoundException, AccountIdMismatchException {
         Balance balance = repository.findById(balanceID).orElseThrow(
-                () -> new BalanceIDNotFoundException("Transaction id not available")
+                () -> new BalanceIDNotFoundException("Balance id not available")
         );
         if(accountId.equals(balance.getAccountId())) {
             return mapper.entityToDto(balance);
