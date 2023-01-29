@@ -15,7 +15,7 @@ public class Constants {
 //    }
     public static final String BALANCE_NOT_FOUND_CODE="404";
     public static final String BALANCE_NOT_FOUND_MESSAGE="Balance not Found for Id-";
-    public static final String BALANCE_DELETED_SUCCESS="Balance deleted successfully.";
+//    public static final String BALANCE_DELETED_SUCCESS="Balance deleted successfully.";
     public static final String METHOD_NOT_ALLOWED_CODE="405";
     public static final String METHOD_NOT_ALLOWED_MESSAGE="Method Not Allowed. Kindly check the Request URL and Request Type.";
     public static final String BAD_REQUEST_CODE="400";
@@ -33,8 +33,13 @@ public class Constants {
     public static final String INTERNAL_SERVER_ERROR_MESSAGE="Server could not resolve your request.";
 
     public  static final String CURRENCY_ERROR="Currency should be Either in INR,DOL,EURO";
+
     public  static final String ACCOUNT_ID_ERROR="AccountId should not be empty";
 
     public static final String AMOUNT_NOT_BLANK = "Account";
     public static final String AMOUNT_REGEX = "^[+]?(\\d+\\.?\\d*|\\.\\d+)$";
+
+//    public  static final String ACCOUNT_ID_ERROR="AccountId should be mandotory";
+    public static final String BALANCE_DELETED_SUCCESS = "Balance Deleted Successfully";
+
 }

@@ -33,10 +33,11 @@ public class BalanceMapperImpl implements BalanceMapper{
     }
 
     @Override
-    public List<Balance> mapToModel(List<BalanceDto> balanceDtos) {
+    public List<Balance> dtoToEntity(List<BalanceDto> balanceDtos) {
         return balanceDtos.stream().map(balanceDto ->  Balance.builder()
                 ._id(balanceDto.get_id())
                 .accountId(balanceDto.getAccountId())
+                .amount(balanceDto.getAmount())
                 .currency(balanceDto.getCurrency())
                 .createdAt(balanceDto.getCreatedAt())
                 .updatedAt(balanceDto.getUpdatedAt())
@@ -45,16 +46,14 @@ public class BalanceMapperImpl implements BalanceMapper{
     }
 
     @Override
-
-
-
-    public List<BalanceDto> mapToDto(List<Balance> balances) {
+    public List<BalanceDto> entityToDto(List<Balance> balances) {
         return balances.stream().map(balance ->  BalanceDto.builder()
 
 
                 ._id(balance.get_id())
                 .accountId(balance.getAccountId())
                 .currency(balance.getCurrency())
+                .amount(balance.getAmount())
                 .createdAt(balance.getCreatedAt())
                 .updatedAt(balance.getUpdatedAt())
                 .build()

@@ -25,15 +25,7 @@ import static com.maveric.balanceservice.enums.Constants.*;
 public class ExceptionControllerAdvisor {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(ExceptionControllerAdvisor.class);
     String exceptionString="";
-    @ExceptionHandler(PathParamsVsInputParamsMismatchException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public final ErrorDto handlePathParamsVsInputParamsMismatchException(PathParamsVsInputParamsMismatchException exception) {
-        ErrorDto errorDto = new ErrorDto();
-        errorDto.setCode(BAD_REQUEST_CODE);
-        errorDto.setMessage(exception.getMessage());
-        log.error("{}-{}");
-        return errorDto;
-    }
+
     @ExceptionHandler(BalanceNotFoundException.class)
     public static final ErrorDto handleBalanceNotFoundException(BalanceNotFoundException exception) {
         ErrorDto errorDto = new ErrorDto();

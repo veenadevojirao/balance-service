@@ -2,26 +2,19 @@ package com.maveric.balanceservice.service;
 
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.entity.Balance;
-import com.maveric.balanceservice.enums.Currency;
 import com.maveric.balanceservice.exception.BalanceAlreadyExistException;
-import com.maveric.balanceservice.exception.BalanceNotFoundException;
-import com.maveric.balanceservice.exception.PathParamsVsInputParamsMismatchException;
-import com.maveric.balanceservice.mapper.BalanceMapper;
 import com.maveric.balanceservice.mapper.BalanceMapperImpl;
 import com.maveric.balanceservice.repository.BalanceRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.maveric.balanceservice.BalanceServiceApplicationTests.getBalance;
 import static com.maveric.balanceservice.BalanceServiceApplicationTests.getBalanceDto;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
@@ -53,6 +46,6 @@ public class BalanceServiceTest {
     @Test
     void createAccount_failure() {
         Throwable error = assertThrows(BalanceAlreadyExistException.class,()->service.createBalance("1233",getBalanceDto()));  //NOSONAR
-        assertEquals("This AccountId Id should be mandotory",error.getMessage());
+        assertEquals("This AccountId Id should be match",error.getMessage());
     }
 }

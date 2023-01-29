@@ -38,4 +38,7 @@ public class Balance {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = true)
     private Date updatedAt =new Date();
+
+
+
 }
