@@ -1,9 +1,14 @@
 package com.maveric.balanceservice.dto;
 
+import com.maveric.balanceservice.enums.Constants;
 import com.maveric.balanceservice.enums.Currency;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -15,12 +20,13 @@ import java.util.Date;
 public class BalanceDto {
     private String  _id;
 
-
+    @NotNull(message = "accountId should not be empty")
     private String accountId;
-
-//    @Min(value = 0,message = "Amount shouldn't be lesser than zero")
+    @NotNull(message = "amount should not be empty")
+    @Min(value =0,message = "ammount should not le lesser than 0")
+    //    @Min(value = 0,message = "Amount shouldn't be lesser than zero")
     private Number amount;
-//    @Valid
+    //    @Valid
 //    @NotNull(message = "Currency is mandatory INR/DOLLAR/EURO ")
     @Enumerated(EnumType.STRING)
     private Currency currency;

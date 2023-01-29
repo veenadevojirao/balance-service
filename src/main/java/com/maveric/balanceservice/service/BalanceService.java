@@ -7,5 +7,10 @@ import org.springframework.data.domain.Pageable;
 
 public interface BalanceService {
 
-    BalanceDto getBalanceIdByAccountId(String accountId, String balanceId) throws BalanceIDNotFoundException, AccountIdMismatchException;
+    public BalanceDto createBalance(String accountId, BalanceDto balanceDto);
+
+
+
+
+
 }

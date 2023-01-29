@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1")
 public class BalanceController {
@@ -21,12 +23,13 @@ public class BalanceController {
     @Autowired
     private BalanceRepository balanceRepository;
 
-
-    @GetMapping("accounts/{accountId}/balances/{balanceId}")
-    public ResponseEntity<BalanceDto> getBalanceByAccountId(@PathVariable("accountId") String accountId,
-                                                                    @PathVariable("balanceId") String balanceId)
-            throws BalanceIDNotFoundException, AccountIdMismatchException {
-
-        return new ResponseEntity<>(balanceService.getBalanceIdByAccountId(accountId, balanceId), HttpStatus.OK);
+    @PostMapping("accounts/{accountId}/balances")
+    public ResponseEntity<BalanceDto> createBalance(@PathVariable String accountId,@Valid @RequestBody BalanceDto balanceDto) {
+        log.info("API call to create a new Balance for given Account Id");
+        BalanceDto balanceDtoResponse = balanceService.createBalance(accountId, balanceDto);
+        System.out.println("In controller method");
+        log.info("New Balance Created successfully");
+        return new ResponseEntity<>(balanceDtoResponse, HttpStatus.CREATED);
     }
+
 }
