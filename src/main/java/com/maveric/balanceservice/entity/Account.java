@@ -9,13 +9,14 @@ import java.util.Date;
 public class Account {
     private String _id;
 
+
     private Type type;
+
 
     private String customerId;
 
     private Date createdAt;
 
     private Date updatedAt;
-
 
 }

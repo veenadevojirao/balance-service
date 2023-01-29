@@ -2,16 +2,19 @@ package com.maveric.balanceservice.service;
 
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.entity.Balance;
+
 import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
 import com.maveric.balanceservice.exception.BalanceNotFoundException;
+
+import com.maveric.balanceservice.exception.AccountIdMismatchException;
+import com.maveric.balanceservice.exception.BalanceAlreadyExistException;
+import com.maveric.balanceservice.exception.BalanceIDNotFoundException;
+
 import com.maveric.balanceservice.mapper.BalanceMapper;
 import com.maveric.balanceservice.repository.BalanceRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-
 //import static com.maveric.balanceservice.enums.Constants.getCurrentDateTime;
 
 @Service
@@ -21,11 +24,6 @@ public  class BalanceServiceImpl implements BalanceService {
     BalanceRepository repository;
     @Autowired
     BalanceMapper mapper;
-
-//    @Override
-//    public BalanceDto updateBalance(String accountId, String balanceId, BalanceDto balanceDto) {
-//        return BalanceDto.builder().build();
-//    }
 
     @Override
     public BalanceDto updateBalance(String accountId,String balanceId,BalanceDto balanceDto) {
@@ -52,19 +50,30 @@ public  class BalanceServiceImpl implements BalanceService {
             throw new BalanceIdNotFoundException("AccountId is not equal");
         }
 
-
     }
+        @Override
+        public BalanceDto createBalance(String accountId, BalanceDto balanceDto) {
+            if ((accountId.equals(balanceDto.getAccountId()))){
+                if(repository.findByAccountId(accountId) == null){
+                    Balance balance = mapper.dtoToEntity(balanceDto);
+                    //Balance balanceResult = repository.save(balance);
+                    log.error("Created new Balance successfully");
+                    return mapper.entityToDto(repository.save(balance));
+                }
+                else{
+                    throw new BalanceAlreadyExistException("Balance already exsists exception");
+                }
+
+            }
+            else {
+                throw new BalanceAlreadyExistException("This AccountId Id should be match");
+            }
+
+
+        }
+
+
+
+    
 }
-
-
-
-
-//        private Date getCurrentDateTime () {
-//            return getCurrentDateTime();
-//        }
-
-
-
-
-
 
