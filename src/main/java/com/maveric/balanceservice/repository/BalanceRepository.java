@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BalanceRepository extends MongoRepository<Balance,String> {
+
     Object deleteBalanceByAccountId(String s, String s1);
+
+
+    Balance findByAccountId(String accountId);
 
 }

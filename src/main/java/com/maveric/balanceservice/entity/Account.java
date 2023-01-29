@@ -11,9 +11,13 @@ public class Account {
 
     private Type accountType;
 
+
+    private Type type;
+
     private String customerId;
 
     private Date createdAt;
 
     private Date updatedAt;
+
 }
