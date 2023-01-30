@@ -1,8 +1,8 @@
 package com.maveric.balanceservice.entity;
 
+import com.maveric.balanceservice.enums.Type;
 import lombok.Data;
 
-import java.lang.reflect.Type;
 import java.util.Date;
 
 @Data
@@ -13,6 +13,7 @@ public class Account {
 
 
     private Type type;
+
 
     private String customerId;
 

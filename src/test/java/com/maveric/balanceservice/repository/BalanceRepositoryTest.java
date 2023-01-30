@@ -12,18 +12,23 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataMongoTest
+
+//@RunWith(SpringRunner.class)
 public class BalanceRepositoryTest {
     @Autowired
-    BalanceRepository balanceRepository;
+    BalanceRepository repository;
+
     @Test
     public void testSave() {
-        Balance balance = balanceRepository.save(getBalance());
+        Balance balance = repository.save(getBalance());
         assertEquals("1234",balance.getAccountId());
     }
+
     @Test
     public void testFindAll() {
-        List<Balance> balance = balanceRepository.findAll();
-        assertNotNull(balance);
-        assert(balance.size()>0);
+        List<Balance> balances = repository.findAll();
+        assertNotNull(balances);
+        assert(balances.size()>0);
+
     }
 }

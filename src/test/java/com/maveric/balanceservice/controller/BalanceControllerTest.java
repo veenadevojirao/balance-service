@@ -1,6 +1,7 @@
 package com.maveric.balanceservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.entity.Account;
 import com.maveric.balanceservice.entity.Balance;
 import com.maveric.balanceservice.enums.Currency;
@@ -27,6 +28,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @ContextConfiguration(classes=BalanceController.class)
 //@RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
@@ -48,6 +50,14 @@ public class BalanceControllerTest {
 
     @MockBean
     private AccountFeignService accountFeignService;
+
+    @Autowired
+    private MockMvc mock;
+
+
+    @Mock
+    ResponseEntity<BalanceDto> balanceDto;
+
 
     @Test
     void ToCreateBalance() throws Exception{
@@ -82,7 +92,24 @@ public class BalanceControllerTest {
                 .andExpect(status().isBadRequest())
                 .andDo(print());
     }
+    @Test
+    public void getAccounts() throws Exception
+    {
 
+        mock.perform(get("/api/v1/accounts/1234/balances")
+                        .contentType(MediaType.APPLICATION_JSON).header("userId", "1234"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void notgetAccounts() throws Exception {
+//        String invalidApiV1 = new String();
+        mock.perform(get("/api/v1/accounts/12346/balances")
+                .contentType(MediaType.APPLICATION_JSON));
+
+
+    }
     public Balance getSampleBalance(){
 
         Balance balance = new Balance();

@@ -5,32 +5,23 @@ import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.entity.Balance;
 import com.maveric.balanceservice.enums.Currency;
 
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-
-
-
 @SpringBootTest
 public
 class BalanceServiceApplicationTests {
-	public static String asJsonString(final Object obj) {
-		try {
-			return new ObjectMapper().writeValueAsString(obj);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+
+	public static final String APIV1 = "/api/v1/accounts/123/balances";
 
 	@Test
-	void testDoSomething() {  // Noncompliant
+	void contextLoads() {
 		assertTrue(true);
-
 	}
-
 
 	public static Balance getBalance() {
 		return Balance.builder()
@@ -50,4 +41,6 @@ class BalanceServiceApplicationTests {
 				.build();
 
 	}
+
+
 }

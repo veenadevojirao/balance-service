@@ -4,7 +4,11 @@ package com.maveric.balanceservice.service;
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.exception.AccountIdMismatchException;
 
+import java.util.List;
+
 public interface BalanceService {
+
+    List<BalanceDto>getBalanceByAccountId(int page, int pageSize, String accountId);
 
 
 
@@ -15,5 +19,6 @@ public interface BalanceService {
 
     public BalanceDto createBalance(String accountId, BalanceDto balanceDto);
     public BalanceDto updateBalance(String accountId,String balanceId,BalanceDto balanceDto);
+
 
 }
