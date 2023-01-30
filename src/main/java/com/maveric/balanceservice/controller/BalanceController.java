@@ -3,6 +3,9 @@ package com.maveric.balanceservice.controller;
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.exception.AccountIdMismatchException;
 import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
+
+import com.maveric.balanceservice.repository.BalanceRepository;
+
 import com.maveric.balanceservice.service.BalanceService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +25,20 @@ public class BalanceController {
     BalanceService balanceService;
 
 
+
+    @GetMapping("accounts/{accountId}/balances/{balanceId}")
+    public ResponseEntity<BalanceDto> getBalanceByAccountId(@PathVariable("accountId") String accountId,
+                                                            @PathVariable("balanceId") String balanceId)
+            throws BalanceIdNotFoundException, AccountIdMismatchException {
+
+        return new ResponseEntity<>(balanceService.getBalanceIdByAccountId(accountId, balanceId), HttpStatus.OK);
+    }
+
     @GetMapping("accounts/{accountId}/balances")
     public List<BalanceDto> getAllBalanceByAccountId(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                                          @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize, @PathVariable("accountId")@Valid String accountId) {
         return balanceService.getBalanceByAccountId(page, pageSize, accountId);}
+
 
 
     @DeleteMapping("accounts/{accountId}/balances/{balanceId}")

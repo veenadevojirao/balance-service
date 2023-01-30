@@ -5,7 +5,6 @@ import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.entity.Balance;
 import com.maveric.balanceservice.enums.Currency;
 
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,26 +20,35 @@ class BalanceServiceApplicationTests {
 	@Test
 	void contextLoads() {
 		assertTrue(true);
-	}
 
-	public static Balance getBalance() {
-		return Balance.builder()
+	}
+	public static BalanceDto getBalanceDto()
+	{
+		return  BalanceDto.builder()
 				._id("1")
-				.accountId("1234")
-				.currency(Currency.DOLLAR)
-				.amount(1200)
+				.accountId("123")
+				.amount(2000)
+				.currency(Currency.INR)
 				.build();
 	}
-
-	public static BalanceDto getBalanceDto() {
-		return BalanceDto.builder()
+	public static Balance getBalance()
+	{
+		return  Balance.builder()
 				._id("1")
-				.accountId("1234")
-				.amount(1234)
-				.currency(Currency.DOLLAR)
+				.accountId("123")
+				.amount(2000)
+				.currency(Currency.INR)
 				.build();
-
 	}
-
-
+	public static String asJsonString(final Object obj) {
+		try {
+			return new ObjectMapper().writeValueAsString(obj);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
+
+
+
+

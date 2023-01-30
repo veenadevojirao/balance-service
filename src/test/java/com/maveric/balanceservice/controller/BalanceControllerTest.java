@@ -58,7 +58,14 @@ public class BalanceControllerTest {
     @Mock
     ResponseEntity<BalanceDto> balanceDto;
 
+    @Test
+    void shouldGetBalanceWhenRequestMadeToGetBalance() throws Exception{
+        when(accountFeignService.getAccountsbyId("1")).thenReturn(getSampleAccount());
+        mvc.perform(get("/api/v1/accounts/1/balances/631061c4c45f78545a1ed042").header("userId",1))
+                .andExpect(status().isOk())
+                .andDo(print());
 
+    }
     @Test
     void ToCreateBalance() throws Exception{
         Mockito.when(accountFeignService.getAccountsbyId("1")).thenReturn(getSampleAccount());
@@ -134,6 +141,3 @@ public class BalanceControllerTest {
         return ResponseEntity.status(HttpStatus.OK).body(accountList);
     }
 }
-
-
-

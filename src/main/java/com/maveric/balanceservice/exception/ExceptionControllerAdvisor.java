@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import static com.maveric.balanceservice.enums.Constants.BAD_REQUEST_CODE;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.maveric.balanceservice.enums.Constants.*;
+
 
 //import static org.hibernate.id.enhanced.StandardOptimizerDescriptor.log;
 @ControllerAdvice
@@ -34,6 +37,13 @@ public class ExceptionControllerAdvisor {
         return errorDto;
     }
 
+    private ErrorDto getErrorb(String message , String code){
+        ErrorDto error = new ErrorDto();
+        error.setCode(code);
+        error.setMessage(message);
+        return error;
+    }
+
     @ExceptionHandler(BalanceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public static final ErrorDto handleBalanceNotFoundException(BalanceNotFoundException exception) {
@@ -41,6 +51,7 @@ public class ExceptionControllerAdvisor {
         errorDto.setCode(BALANCE_NOT_FOUND_CODE);
         errorDto.setMessage(exception.getMessage());
         return errorDto;
+
     }
     @ExceptionHandler(BalanceAlreadyExistException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -2,6 +2,7 @@ package com.maveric.balanceservice.service;
 
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.entity.Balance;
+import com.maveric.balanceservice.enums.Currency;
 import com.maveric.balanceservice.exception.AccountIdMismatchException;
 import com.maveric.balanceservice.exception.BalanceAlreadyExistException;
 import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
@@ -92,5 +93,23 @@ when(repository.save(any())).thenReturn(getBalance());
         List<BalanceDto> balance = balanceService.getBalanceByAccountId(1,1,"1234");
 
         assertEquals(0, balance.size());
+    }
+    @Test
+    void shouldReturnBalanceWhenGetBalanceInvoked() throws Exception {
+        when(repository.findById("631061c4c45f78545a1ed04")).thenReturn(Optional.of(getSampleBalance()));
+
+        String balance = String.valueOf(balanceService.getBalanceIdByAccountId("1","631061c4c45f78545a1ed04"));
+
+        assertNotNull(balance);
+        assertSame(balance,getSampleBalance().getAmount());
+
+    }
+    public Balance getSampleBalance(){
+        Balance balance = new Balance();
+
+        balance.setCurrency(Currency.INR);
+        balance.setAccountId("1");
+        balance.setAmount(200);
+        return balance;
     }
 }

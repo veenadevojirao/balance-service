@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface BalanceRepository extends MongoRepository<Balance,String>{
-//    Page<Balance> findByAccountId(Pageable pageable, String accountId);
+public interface BalanceRepository extends MongoRepository<Balance,String> {
+//    Object findByAccountIdAndBalanceId(String accountId, String balanceID);
+
+
 
     Page<Balance> findByAccountId(Pageable pageable, String accountId);
 
@@ -23,4 +25,5 @@ public interface BalanceRepository extends MongoRepository<Balance,String>{
     Balance findByAccountId(String accountId);
 
 
+//    Object findByAccountIdAndBalanceId(String s, String s1);
 }

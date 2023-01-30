@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataMongoTest
 
+
+
 //@RunWith(SpringRunner.class)
 public class BalanceRepositoryTest {
     @Autowired
@@ -21,7 +23,8 @@ public class BalanceRepositoryTest {
     @Test
     public void testSave() {
         Balance balance = repository.save(getBalance());
-        assertEquals("1234",balance.getAccountId());
+
+        assertEquals("123",balance.getAccountId());
     }
 
     @Test
@@ -31,4 +34,6 @@ public class BalanceRepositoryTest {
         assert(balances.size()>0);
 
     }
+
+
 }

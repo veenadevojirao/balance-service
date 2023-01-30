@@ -6,11 +6,15 @@ import com.maveric.balanceservice.entity.Balance;
 import com.maveric.balanceservice.exception.BalanceAlreadyExistException;
 
 import com.maveric.balanceservice.exception.AccountIdMismatchException;
+
+import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
+
 import com.maveric.balanceservice.exception.BalanceAlreadyExistException;
 //import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
 import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
 
 import com.maveric.balanceservice.exception.BalanceNotFoundException;
+
 import com.maveric.balanceservice.mapper.BalanceMapper;
 import com.maveric.balanceservice.repository.BalanceRepository;
 import org.slf4j.Logger;
@@ -20,9 +24,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 
 import java.util.Optional;
+
 
 
 //import static com.maveric.balanceservice.enums.Constants.getCurrentDateTime;
@@ -36,7 +42,7 @@ public  class BalanceServiceImpl implements BalanceService {
     BalanceMapper mapper;
 
     @Override
-    public List<BalanceDto>getBalanceByAccountId(int page, int pageSize, String accountId) {
+    public List<BalanceDto> getBalanceByAccountId(int page, int pageSize, String accountId) {
 
         if (repository.findById(accountId).isPresent()) {
             throw new BalanceNotFoundException("Balance details not found");
@@ -49,6 +55,7 @@ public  class BalanceServiceImpl implements BalanceService {
             return balanceList.stream().map(balance -> mapper.entityToDto(balance)).toList();
         }
     }
+
     @Override
     public String deleteBalanceByAccountId(String accountId, String balanceId) throws BalanceIdNotFoundException, AccountIdMismatchException {
         Balance balance = repository.findById(balanceId).orElseThrow(
@@ -62,6 +69,7 @@ public  class BalanceServiceImpl implements BalanceService {
         return accountId;
 
     }
+
     @Override
     public BalanceDto updateBalance(String accountId, String balanceId, BalanceDto balanceDto) {
         System.out.println(accountId);
@@ -90,34 +98,45 @@ public  class BalanceServiceImpl implements BalanceService {
     }
 
 
-        @Override
-        public BalanceDto createBalance(String accountId, BalanceDto balanceDto) {
-            if ((accountId.equals(balanceDto.getAccountId()))){
-                if(repository.findByAccountId(accountId) == null){
-                    Balance balance = mapper.dtoToEntity(balanceDto);
-                    //Balance balanceResult = repository.save(balance);
-                    log.error("Created new Balance successfully");
-                    return mapper.entityToDto(repository.save(balance));
-                }
-                else{
-                    throw new BalanceAlreadyExistException("Balance already exsists exception");
-                }
-
-            }
-            else {
-                throw new BalanceAlreadyExistException("This AccountId Id should be match");
+    @Override
+    public BalanceDto createBalance(String accountId, BalanceDto balanceDto) {
+        if ((accountId.equals(balanceDto.getAccountId()))) {
+            if (repository.findByAccountId(accountId) == null) {
+                Balance balance = mapper.dtoToEntity(balanceDto);
+                //Balance balanceResult = repository.save(balance);
+                log.error("Created new Balance successfully");
+                return mapper.entityToDto(repository.save(balance));
+            } else {
+                throw new BalanceAlreadyExistException("Balance already exsists exception");
             }
 
-
+        } else {
+            throw new BalanceAlreadyExistException("This AccountId Id should be match");
         }
 
 
-    @Override
-    public Object deleteBalance(Object any, Object any1) {
-        return deleteBalance("2", "2");
     }
 
-    
+
+    @Override
+
+    public BalanceDto getBalanceIdByAccountId(String accountId, String balanceID) throws BalanceIdNotFoundException, AccountIdMismatchException {
+        Balance balance = repository.findById(balanceID).orElseThrow(
+                () -> new BalanceIdNotFoundException("Balance id not available")
+        );
+        if (accountId.equals(balance.getAccountId())) {
+            return mapper.entityToDto(balance);
+        } else {
+            throw new AccountIdMismatchException("Account Id not available");
+        }
+    }
+
+    public Object deleteBalance(Object any, Object any1) {
+        return deleteBalance("2", "2");
+
+    }
+
 }
+
 
 
