@@ -2,7 +2,7 @@ package com.maveric.balanceservice.controller;
 
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.exception.AccountIdMismatchException;
-import com.maveric.balanceservice.exception.BalanceIDNotFoundException;
+import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
 import com.maveric.balanceservice.repository.BalanceRepository;
 import com.maveric.balanceservice.service.BalanceService;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class BalanceController {
     @GetMapping("accounts/{accountId}/balances/{balanceId}")
     public ResponseEntity<BalanceDto> getBalanceByAccountId(@PathVariable("accountId") String accountId,
                                                                     @PathVariable("balanceId") String balanceId)
-            throws BalanceIDNotFoundException, AccountIdMismatchException {
+            throws BalanceIdNotFoundException, AccountIdMismatchException {
 
         return new ResponseEntity<>(balanceService.getBalanceIdByAccountId(accountId, balanceId), HttpStatus.OK);
     }

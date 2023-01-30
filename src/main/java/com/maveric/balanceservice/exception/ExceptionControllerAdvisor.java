@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import static com.maveric.balanceservice.enums.Constants.BAD_REQUEST_CODE;
-import static com.maveric.balanceservice.enums.Constants.BALANCE_NOT_FOUND_CODE;
 
 //import static org.hibernate.id.enhanced.StandardOptimizerDescriptor.log;
 @ControllerAdvice
@@ -32,8 +31,8 @@ public class ExceptionControllerAdvisor {
         error.setMessage(message);
         return error;
     }
-    @ExceptionHandler(BalanceIDNotFoundException.class)
-    public ResponseEntity<ErrorDto> handleTransactionIdNotFoundException(BalanceIDNotFoundException e) {
+    @ExceptionHandler(BalanceIdNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleTransactionIdNotFoundException(BalanceIdNotFoundException e) {
         ErrorDto error = getError(e.getMessage(), String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }

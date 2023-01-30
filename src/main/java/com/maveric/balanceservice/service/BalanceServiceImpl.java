@@ -3,7 +3,7 @@ package com.maveric.balanceservice.service;
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.entity.Balance;
 import com.maveric.balanceservice.exception.AccountIdMismatchException;
-import com.maveric.balanceservice.exception.BalanceIDNotFoundException;
+import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
 import com.maveric.balanceservice.mapper.BalanceMapper;
 import com.maveric.balanceservice.repository.BalanceRepository;
 import org.slf4j.Logger;
@@ -23,9 +23,9 @@ public  class BalanceServiceImpl implements BalanceService {
 
 
     @Override
-    public BalanceDto getBalanceIdByAccountId(String accountId, String balanceID) throws BalanceIDNotFoundException, AccountIdMismatchException {
+    public BalanceDto getBalanceIdByAccountId(String accountId, String balanceID) throws BalanceIdNotFoundException, AccountIdMismatchException {
         Balance balance = repository.findById(balanceID).orElseThrow(
-                () -> new BalanceIDNotFoundException("Balance id not available")
+                () -> new BalanceIdNotFoundException("Balance id not available")
         );
         if(accountId.equals(balance.getAccountId())) {
             return mapper.entityToDto(balance);
