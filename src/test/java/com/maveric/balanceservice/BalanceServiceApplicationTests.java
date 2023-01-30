@@ -4,18 +4,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.entity.Balance;
 import com.maveric.balanceservice.enums.Currency;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+
 @SpringBootTest
 public
 class BalanceServiceApplicationTests {
 
+	public static final String APIV1 = "/api/v1/accounts/123/balances";
+
 	@Test
 	void contextLoads() {
 		assertTrue(true);
+
 	}
 	public static BalanceDto getBalanceDto()
 	{
@@ -43,3 +48,7 @@ class BalanceServiceApplicationTests {
 		}
 	}
 }
+
+
+
+

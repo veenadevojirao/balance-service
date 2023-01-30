@@ -12,6 +12,9 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataMongoTest
+
+
+
 //@RunWith(SpringRunner.class)
 public class BalanceRepositoryTest {
     @Autowired
@@ -20,6 +23,7 @@ public class BalanceRepositoryTest {
     @Test
     public void testSave() {
         Balance balance = repository.save(getBalance());
+
         assertEquals("123",balance.getAccountId());
     }
 
@@ -28,5 +32,8 @@ public class BalanceRepositoryTest {
         List<Balance> balances = repository.findAll();
         assertNotNull(balances);
         assert(balances.size()>0);
+
     }
+
+
 }

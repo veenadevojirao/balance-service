@@ -4,13 +4,15 @@ import com.maveric.balanceservice.enums.Currency;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Getter
 @Builder
 @Setter
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "balance")
@@ -18,10 +20,13 @@ public class Balance {
     @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
     private String _id;
+
+
     private String accountId;
+
     private Number amount;
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     private Currency currency;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
