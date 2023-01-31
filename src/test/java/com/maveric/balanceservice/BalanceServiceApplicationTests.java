@@ -26,7 +26,7 @@ class BalanceServiceApplicationTests {
 	{
 		return  BalanceDto.builder()
 				._id("1")
-				.accountId("123")
+				.accountId("1234")
 				.amount(2000)
 				.currency(Currency.INR)
 				.build();
@@ -35,7 +35,7 @@ class BalanceServiceApplicationTests {
 	{
 		return  Balance.builder()
 				._id("1")
-				.accountId("123")
+				.accountId("1234")
 				.amount(2000)
 				.currency(Currency.INR)
 				.build();

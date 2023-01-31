@@ -8,17 +8,7 @@ import java.util.Date;
 @Data
 public class Account {
     private String _id;
-
-
-    private Type Type;
-
     private Type accountType;
-
-
-    private Type type;
-
-
-
     private String customerId;
 
     private Date createdAt;

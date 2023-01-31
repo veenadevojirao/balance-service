@@ -20,8 +20,6 @@ import java.util.Map;
 
 import static com.maveric.balanceservice.enums.Constants.*;
 
-
-//import static org.hibernate.id.enhanced.StandardOptimizerDescriptor.log;
 @ControllerAdvice
 @RestControllerAdvice
 public class ExceptionControllerAdvisor {
@@ -35,13 +33,6 @@ public class ExceptionControllerAdvisor {
         errorDto.setCode(BALANCE_NOT_FOUND_CODE);
         errorDto.setMessage(exception.getMessage());
         return errorDto;
-    }
-
-    private ErrorDto getErrorb(String message , String code){
-        ErrorDto error = new ErrorDto();
-        error.setCode(code);
-        error.setMessage(message);
-        return error;
     }
 
     @ExceptionHandler(BalanceNotFoundException.class)
@@ -75,12 +66,6 @@ public class ExceptionControllerAdvisor {
         error.setMessage(message);
         return error;}
 
-//    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
-//    public ResponseEntity<ErrorDto> handledFormatException(HttpMediaTypeNotAcceptableException e)
-//    {
-//        ErrorDto error = getErrorMsg(Constants.ACCOUNT_ID_ERROR, String.valueOf(HttpStatus.BAD_REQUEST));
-//        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-//    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

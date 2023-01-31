@@ -3,9 +3,6 @@ package com.maveric.balanceservice.controller;
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.exception.AccountIdMismatchException;
 import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
-
-import com.maveric.balanceservice.repository.BalanceRepository;
-
 import com.maveric.balanceservice.service.BalanceService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +33,8 @@ public class BalanceController {
 
     @GetMapping("accounts/{accountId}/balances")
     public List<BalanceDto> getAllBalanceByAccountId(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
-                                                         @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize, @PathVariable("accountId")@Valid String accountId) {
+                                                         @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize, @PathVariable("accountId")@Valid String accountId)throws BalanceIdNotFoundException {
+
         return balanceService.getBalanceByAccountId(page, pageSize, accountId);}
 
 
@@ -60,7 +58,6 @@ public class BalanceController {
         public ResponseEntity<BalanceDto> createBalance(@PathVariable String accountId,@Valid @RequestBody BalanceDto balanceDto) {
             log.info("API call to create a new Balance for given Account Id");
             BalanceDto balanceDtoResponse = balanceService.createBalance(accountId, balanceDto);
-            System.out.println("In controller method");
             log.info("New Balance Created successfully");
             return new ResponseEntity<>(balanceDtoResponse, HttpStatus.CREATED);
 

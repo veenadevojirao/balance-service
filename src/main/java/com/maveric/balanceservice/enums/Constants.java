@@ -1,7 +1,5 @@
 package com.maveric.balanceservice.enums;
 
-import java.util.Date;
-
 public class Constants {
 
 
@@ -10,12 +8,8 @@ public class Constants {
 
     }
 
-//    public static LocalDateTime getCurrentDateTime() {
-//        return (java.time.LocalDateTime.now());
-//    }
     public static final String BALANCE_NOT_FOUND_CODE="404";
     public static final String BALANCE_NOT_FOUND_MESSAGE="Balance not Found for Id-";
-//    public static final String BALANCE_DELETED_SUCCESS="Balance deleted successfully.";
     public static final String METHOD_NOT_ALLOWED_CODE="405";
     public static final String METHOD_NOT_ALLOWED_MESSAGE="Method Not Allowed. Kindly check the Request URL and Request Type.";
     public static final String BAD_REQUEST_CODE="400";
@@ -39,7 +33,6 @@ public class Constants {
     public static final String AMOUNT_NOT_BLANK = "Account";
     public static final String AMOUNT_REGEX = "^[+]?(\\d+\\.?\\d*|\\.\\d+)$";
 
-//    public  static final String ACCOUNT_ID_ERROR="AccountId should be mandotory";
     public static final String BALANCE_DELETED_SUCCESS = "Balance Deleted Successfully";
 
 }

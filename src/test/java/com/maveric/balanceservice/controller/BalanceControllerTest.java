@@ -109,14 +109,7 @@ public class BalanceControllerTest {
                 .andDo(print());
     }
 
-    @Test
-    public void notgetAccounts() throws Exception {
-//        String invalidApiV1 = new String();
-        mock.perform(get("/api/v1/accounts/12346/balances")
-                .contentType(MediaType.APPLICATION_JSON));
 
-
-    }
     public Balance getSampleBalance(){
 
         Balance balance = new Balance();
