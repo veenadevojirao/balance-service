@@ -9,10 +9,6 @@ import com.maveric.balanceservice.exception.AccountIdMismatchException;
 
 import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
 
-import com.maveric.balanceservice.exception.BalanceAlreadyExistException;
-//import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
-import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
-
 import com.maveric.balanceservice.exception.BalanceNotFoundException;
 
 import com.maveric.balanceservice.mapper.BalanceMapper;
@@ -30,9 +26,6 @@ import java.util.List;
 import java.util.Optional;
 
 
-
-//import static com.maveric.balanceservice.enums.Constants.getCurrentDateTime;
-
 @Service
 public  class BalanceServiceImpl implements BalanceService {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(BalanceServiceImpl.class);
@@ -42,17 +35,16 @@ public  class BalanceServiceImpl implements BalanceService {
     BalanceMapper mapper;
 
     @Override
-    public List<BalanceDto> getBalanceByAccountId(int page, int pageSize, String accountId) {
-
-        if (repository.findById(accountId).isPresent()) {
-            throw new BalanceNotFoundException("Balance details not found");
-
+    public List<BalanceDto> getBalanceByAccountId(int page, int pageSize, String accountId) throws BalanceIdNotFoundException{
+        Pageable paging = PageRequest.of(page, pageSize);
+        Page<Balance> pageResult = repository.findByAccountId(paging, accountId);
+        if (pageResult.hasContent()) {
+            List<Balance> account = pageResult.getContent();
+            log.info("Retrieved list of accounts from DB");
+            return mapper.entityToDto(account);
         } else {
-            Pageable pageable = PageRequest.of(page, pageSize);
-            Page<Balance> balancePage = repository.findByAccountId(pageable, accountId);
+            throw new BalanceIdNotFoundException("Balance Not found");
 
-            List<Balance> balanceList = balancePage.getContent();
-            return balanceList.stream().map(balance -> mapper.entityToDto(balance)).toList();
         }
     }
 
@@ -72,8 +64,7 @@ public  class BalanceServiceImpl implements BalanceService {
 
     @Override
     public BalanceDto updateBalance(String accountId, String balanceId, BalanceDto balanceDto) {
-        System.out.println(accountId);
-        System.out.println(balanceDto.getAccountId());
+
         if ((accountId.equals(balanceDto.getAccountId()))) {
 
             Optional<Balance> balanceFromDb = repository.findById(balanceId);
@@ -103,7 +94,6 @@ public  class BalanceServiceImpl implements BalanceService {
         if ((accountId.equals(balanceDto.getAccountId()))) {
             if (repository.findByAccountId(accountId) == null) {
                 Balance balance = mapper.dtoToEntity(balanceDto);
-                //Balance balanceResult = repository.save(balance);
                 log.error("Created new Balance successfully");
                 return mapper.entityToDto(repository.save(balance));
             } else {

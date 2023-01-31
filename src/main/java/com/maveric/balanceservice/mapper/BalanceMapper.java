@@ -12,10 +12,5 @@ public interface BalanceMapper {
 
     List<Balance> dtoToEntity (List<BalanceDto> accounts);
 
-
-//    MediaType entityToDto(List<Account> accounts);
-
-
-
     List<BalanceDto> entityToDto (List<Balance> accounts);
 }

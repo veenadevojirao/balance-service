@@ -14,8 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DataMongoTest
 
 
-
-//@RunWith(SpringRunner.class)
 public class BalanceRepositoryTest {
     @Autowired
     BalanceRepository repository;

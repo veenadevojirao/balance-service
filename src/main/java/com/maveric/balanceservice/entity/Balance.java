@@ -18,7 +18,6 @@ import java.util.Date;
 @Document(collection = "balance")
 public class Balance {
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     private String _id;
 
 
@@ -26,7 +25,6 @@ public class Balance {
 
     private Number amount;
 
-//    @Enumerated(EnumType.STRING)
     private Currency currency;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)

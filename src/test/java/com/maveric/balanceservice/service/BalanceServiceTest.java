@@ -95,14 +95,11 @@ when(repository.save(any())).thenReturn(getBalance());
         assertEquals(0, balance.size());
     }
     @Test
-    void shouldReturnBalanceWhenGetBalanceInvoked() throws Exception {
-        when(repository.findById("631061c4c45f78545a1ed04")).thenReturn(Optional.of(getSampleBalance()));
-
-        String balance = String.valueOf(balanceService.getBalanceIdByAccountId("1","631061c4c45f78545a1ed04"));
-
-        assertNotNull(balance);
-        assertSame(balance,getSampleBalance().getAmount());
-
+    void getAccountDetailsById() throws BalanceIdNotFoundException {
+        when(repository.findById(any(String.class))).thenReturn(Optional.empty());
+        assertThrows(BalanceIdNotFoundException.class,()->{
+            balanceService.getBalanceIdByAccountId("1","1");
+        });
     }
     public Balance getSampleBalance(){
         Balance balance = new Balance();
