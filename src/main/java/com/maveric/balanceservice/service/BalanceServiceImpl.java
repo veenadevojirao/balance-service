@@ -1,6 +1,7 @@
 package com.maveric.balanceservice.service;
 
 import com.maveric.balanceservice.dto.BalanceDto;
+import com.maveric.balanceservice.entity.Account;
 import com.maveric.balanceservice.entity.Balance;
 
 import com.maveric.balanceservice.exception.BalanceAlreadyExistException;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 @Service
@@ -35,13 +37,13 @@ public  class BalanceServiceImpl implements BalanceService {
     BalanceMapper mapper;
 
     @Override
-    public List<BalanceDto> getBalanceByAccountId(int page, int pageSize, String accountId) throws BalanceIdNotFoundException{
-        Pageable paging = PageRequest.of(page, pageSize);
-        Page<Balance> pageResult = repository.findByAccountId(paging, accountId);
-        if (pageResult.hasContent()) {
-            List<Balance> account = pageResult.getContent();
+    public BalanceDto getBalanceByAccountId(String accountId) throws BalanceIdNotFoundException{
+
+        Balance balanceResult = repository.findByAccountId( accountId);
+        if (balanceResult!=null) {
+
             log.info("Retrieved list of accounts from DB");
-            return mapper.entityToDto(account);
+            return mapper.entityToDto(balanceResult);
         } else {
             throw new BalanceIdNotFoundException("Balance Not found");
 
@@ -88,7 +90,6 @@ public  class BalanceServiceImpl implements BalanceService {
 
     }
 
-
     @Override
     public BalanceDto createBalance(String accountId, BalanceDto balanceDto) {
         if ((accountId.equals(balanceDto.getAccountId()))) {
@@ -120,10 +121,26 @@ public  class BalanceServiceImpl implements BalanceService {
             throw new AccountIdMismatchException("Account Id not available");
         }
     }
+    @Override
+    public void findAccountIdBelongsToCurrentUser(List<Account> account, String account_id){
+        AtomicInteger count = new AtomicInteger(0);
+        account.forEach(singleAccount -> {
+            if (singleAccount.get_id().equals(account_id)){
+                count.getAndIncrement();
+            }
+        });
+        if(count.get() == 0){
+            throw new AccountIdMismatchException(account_id);
+        }
+    }
 
     public Object deleteBalance(Object any, Object any1) {
         return deleteBalance("2", "2");
 
+    }
+    @Override
+    public BalanceDto getBalanceForParticularAccount(String accountId) {
+        return getBalanceForParticularAccount("1");
     }
 
 }

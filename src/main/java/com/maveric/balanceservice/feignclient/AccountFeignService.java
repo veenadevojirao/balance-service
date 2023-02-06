@@ -10,6 +10,9 @@ import java.util.List;
 
 @FeignClient(value = "feignAccount",url = "http://localhost:3010/api/v1/")
 public interface AccountFeignService {
-    @GetMapping("/customers/{customerId}/customerAccounts")
+    @GetMapping("/customers/{customerId}/accounts")
     ResponseEntity<List<Account>> getAccountsbyId(@PathVariable String customerId);
+
+    @GetMapping("customers/{customerId}/accounts/{accountId}")
+    ResponseEntity<List<Account>> getAccount(@PathVariable String accountId);
 }

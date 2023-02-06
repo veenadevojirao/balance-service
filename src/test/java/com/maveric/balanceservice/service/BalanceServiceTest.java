@@ -90,7 +90,7 @@ when(repository.save(any())).thenReturn(getBalance());
         Page<Balance> pagedResponse = new PageImpl(Arrays.asList());
         when(repository.findByAccountId(any(Pageable.class),eq("1234"))).thenReturn(pagedResponse);
 
-        List<BalanceDto> balance = balanceService.getBalanceByAccountId(1,1,"1234");
+        List<BalanceDto> balance = (List<BalanceDto>) balanceService.getBalanceByAccountId("1234");
 
         assertEquals(0, balance.size());
     }
