@@ -15,22 +15,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static com.maveric.balanceservice.BalanceServiceApplicationTests.getBalance;
 import static com.maveric.balanceservice.BalanceServiceApplicationTests.getBalanceDto;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
-//@RunWith(SpringRunner.class)
+
 public class BalanceServiceTest {
     @InjectMocks
     private BalanceServiceImpl balanceService;
