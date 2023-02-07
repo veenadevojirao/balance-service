@@ -44,6 +44,14 @@ public class ExceptionControllerAdvisor {
         return errorDto;
 
     }
+    @ExceptionHandler(CustomerIDNotFoundExistsException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public final ErrorDto handleCustomerIDNotFoundExistsException(CustomerIDNotFoundExistsException exception) {
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setCode(BALANCE_NOT_FOUND_CODE);
+        errorDto.setMessage(exception.getMessage());
+        return errorDto;
+    }
     @ExceptionHandler(BalanceAlreadyExistException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public final ErrorDto handleBalanceAlreadyExistException(BalanceAlreadyExistException exception) {

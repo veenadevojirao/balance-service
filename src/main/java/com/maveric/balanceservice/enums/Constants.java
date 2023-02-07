@@ -34,5 +34,7 @@ public class Constants {
     public static final String AMOUNT_REGEX = "^[+]?(\\d+\\.?\\d*|\\.\\d+)$";
 
     public static final String BALANCE_DELETED_SUCCESS = "Balance Deleted Successfully";
+    public static final String GET_BALANCE_LOG = "getBalanceDetails-> balance fetched for accountId ";
+    public static final String NOT_AUTHORIZED_USER = "You are not an authorized user";
 
 }
