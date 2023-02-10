@@ -15,7 +15,7 @@ public interface BalanceRepository extends MongoRepository<Balance,String> {
 
     Page<Balance> findByAccountId(Pageable pageable, String accountId);
 
-    Object deleteBalanceByAccountId(String s, String s1);
+    Object deleteBalanceByAccountId(String s);
 
 
     Balance findByAccountId(String accountId);
