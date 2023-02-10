@@ -27,5 +27,6 @@ public interface BalanceService {
     BalanceDto getBalanceForParticularAccount(String accountId);
 
 void findAccountIdBelongsToCurrentUser(List<Account> body, String accountId);
+    void deleteBalanceByAccountId(String accountId);
 
 }

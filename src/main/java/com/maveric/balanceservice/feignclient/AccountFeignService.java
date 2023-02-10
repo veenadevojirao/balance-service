@@ -16,7 +16,7 @@ import java.util.List;
 @FeignClient(value = "feignAccount",url = "http://localhost:3010/api/v1/")
 public interface AccountFeignService {
     @GetMapping("/customers/{customerId}/accounts")
-    ResponseEntity<List<Account>> getAccountsbyId(@PathVariable String customerId);
+    ResponseEntity<List<Account>> getAccountantId(@PathVariable String customerId);
     @GetMapping("customers/{customerId}/accounts/{accountId}")
     public AccountDto getAccount(@PathVariable("customerId") String customerId,
                                  @Valid @PathVariable("accountId") String accountId,

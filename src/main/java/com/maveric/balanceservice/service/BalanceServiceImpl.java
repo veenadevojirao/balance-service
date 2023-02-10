@@ -143,6 +143,10 @@ public  class BalanceServiceImpl implements BalanceService {
         return getBalanceForParticularAccount("1");
     }
 
+    @Override
+    public void deleteBalanceByAccountId(String accountId) {
+        repository.deleteBalanceByAccountId(accountId);
+    }
 }
 
 
