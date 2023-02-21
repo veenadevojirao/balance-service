@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @FeignClient(name="user-service")
 @Service
 public interface UserServiceConsumer {
-    @GetMapping("/users/{userId}")
+    @GetMapping("api/v1/users/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("userId") String id,
                                                @RequestHeader(value = "userid") String headerUserId);
 }
