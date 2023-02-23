@@ -15,9 +15,9 @@ import java.util.List;
 
 @FeignClient(value = "account-service")
 public interface AccountFeignService {
-    @GetMapping("api/v1/customers/{customerId}/accounts")
+    @GetMapping("/customers/{customerId}/accounts")
     ResponseEntity<List<Account>> getAccountantId(@PathVariable String customerId);
-    @GetMapping("api/v1/customers/{customerId}/accounts/{accountId}")
+    @GetMapping("customers/{customerId}/accounts/{accountId}")
     public AccountDto getAccount(@PathVariable("customerId") String customerId,
                                  @Valid @PathVariable("accountId") String accountId,
                                  @RequestHeader(value = "userid") String headerUserId) throws AccountNotFoundException, CustomerIDNotFoundExistsException;
