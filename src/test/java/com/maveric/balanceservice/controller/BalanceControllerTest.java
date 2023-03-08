@@ -5,7 +5,6 @@ import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.dto.UserDto;
 import com.maveric.balanceservice.entity.Account;
 import com.maveric.balanceservice.entity.Balance;
-import com.maveric.balanceservice.entity.User;
 import com.maveric.balanceservice.enums.Currency;
 import com.maveric.balanceservice.feignclient.AccountFeignService;
 import com.maveric.balanceservice.feignclient.UserServiceConsumer;

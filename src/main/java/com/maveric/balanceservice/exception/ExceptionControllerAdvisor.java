@@ -25,7 +25,12 @@ import static com.maveric.balanceservice.enums.Constants.*;
 public class ExceptionControllerAdvisor {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(ExceptionControllerAdvisor.class);
     String exceptionString="";
-
+    @ExceptionHandler(AccountIdMismatchException.class)
+    public static ResponseEntity<ErrorDto> accountUserMismatch(AccountIdMismatchException accountIdMismatchException){
+        ErrorDto error = getError(accountIdMismatchException.getMessage(),String.valueOf(HttpStatus.NOT_FOUND));
+        log.error(accountIdMismatchException.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
 
     @ExceptionHandler(BalanceIdNotFoundException.class)
     public static final ErrorDto handleBalanceIdNotFoundException(BalanceIdNotFoundException exception) {
@@ -68,7 +73,7 @@ public class ExceptionControllerAdvisor {
         ErrorDto error = getError(Constants.CURRENCY_ERROR, String.valueOf(HttpStatus.BAD_REQUEST));
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
-    private ErrorDto getError(String message , String code){
+    private static ErrorDto getError(String message, String code){
         ErrorDto error = new ErrorDto();
         error.setCode(code);
         error.setMessage(message);
