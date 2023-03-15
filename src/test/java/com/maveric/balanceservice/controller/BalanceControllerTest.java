@@ -1,18 +1,19 @@
 package com.maveric.balanceservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.maveric.balanceservice.dto.AccountDto;
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.dto.UserDto;
 import com.maveric.balanceservice.entity.Account;
 import com.maveric.balanceservice.entity.Balance;
 import com.maveric.balanceservice.enums.Currency;
+import com.maveric.balanceservice.enums.Type;
 import com.maveric.balanceservice.feignclient.AccountFeignService;
 import com.maveric.balanceservice.feignclient.UserServiceConsumer;
 import com.maveric.balanceservice.repository.BalanceRepository;
 import com.maveric.balanceservice.service.BalanceService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,6 +31,7 @@ import java.util.List;
 import static com.maveric.balanceservice.BalanceServiceApplicationTests.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -67,42 +69,91 @@ public class BalanceControllerTest {
     @Mock
     ResponseEntity<BalanceDto> balanceDto;
 
+
     @Test
-    void getaccountbyBalanceId() throws Exception {
+    void getBalances() throws Exception {
         ResponseEntity<UserDto> responseEntity = new ResponseEntity<>(getUserDto(), HttpStatus.OK);
         when(userServiceConsumer.getUserById(any(String.class), any(String.class))).thenReturn(responseEntity);
-        mock.perform(get(apiV1)
+        mock.perform(get("/api/v1/accounts/1234/balances")
                         .contentType(MediaType.APPLICATION_JSON).header("userid", "1234"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
     @Test
-    public void NotgetBalances() throws Exception
+    void getaccountbyBalanceId() throws Exception {
+        ResponseEntity<UserDto> responseEntity = new ResponseEntity<>(new UserDto(), HttpStatus.OK);
+        when(userServiceConsumer.getUserById(any(String.class),any())).thenReturn(responseEntity);
+        Throwable error = assertThrows(NestedServletException.class, () -> mock.perform(get("/api/v1/accounts/123/balances/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("userid", "1234")).andReturn());
+    }
+
+    @Test
+    void NotgetBalances() throws Exception
     {
         mock.perform(get(invalidApiV1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(print());
     }
+
+
+
     @Test
-    void shouldThrowErrorWhenWrongDataPassedForCreateUser() throws Exception{
+    void shouldCreateUser() throws Exception{
+        when(accountFeignService.getAccount(anyString(), anyString(), anyString())).thenReturn(getAccountDto());
+        mvc.perform(post(API_V1_BALANCE)
+                        .contentType(MediaType.APPLICATION_JSON).header("userid", "1234")
+                        .content(mapper.writeValueAsString(getBalanceDto()))).andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+
+    @Test
+    void createBalance_failure() throws Exception{
         mvc.perform(post(API_V1_BALANCE)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(getUserDto()))
                         .header("userid", "1L")).andExpect(status().isBadRequest())
                 .andDo(print());
     }
-
     @Test
-    void deleteBalance_failure() throws Exception {
+    void deleteBalanceByBalanceId() throws Exception {
         ResponseEntity<UserDto> responseEntity = new ResponseEntity<>(new UserDto(), HttpStatus.OK);
         when(userServiceConsumer.getUserById(any(String.class),any())).thenReturn(responseEntity);
-        Throwable error = assertThrows(NestedServletException.class, () -> mock.perform(delete(apiV1 + "/accountId1")
+        Throwable error = assertThrows(NestedServletException.class, () -> mock.perform(delete("/api/v1/accounts/123/balances/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("userid", "1234")).andReturn());
     }
     @Test
-    void updateAccount_failure() throws Exception {
+    void deleteBalanceByBalanceId_failure() throws Exception {
+        ResponseEntity<UserDto> responseEntity = new ResponseEntity<>(new UserDto(), HttpStatus.OK);
+        when(userServiceConsumer.getUserById(any(String.class),any())).thenReturn(responseEntity);
+        Throwable error = assertThrows(NestedServletException.class, () -> mock.perform(delete(apiV1 + "/accountId1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("userid", "123")).andReturn());
+    }
+    @Test
+    void deleteBalanceByAccountId() throws Exception {
+        ResponseEntity<UserDto> responseEntity = new ResponseEntity<>(new UserDto(), HttpStatus.OK);
+        when(userServiceConsumer.getUserById(any(String.class),any())).thenReturn(responseEntity);
+        Throwable error = assertThrows(NestedServletException.class, () -> mock.perform(delete("/api/v1/accounts/123/balances")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("userid", "123")).andReturn());
+    }
+
+    @Test
+    void updateBalance() throws Exception {
+        ResponseEntity<UserDto> responseEntity = new ResponseEntity<>(new UserDto(), HttpStatus.OK);
+        when(userServiceConsumer.getUserById(any(String.class),any())).thenReturn(responseEntity);
+        Throwable error = assertThrows(NestedServletException.class, () -> mock.perform(put("/api/v1/accounts/123/balances/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(getBalanceDto()))
+                .header("userid", "1234")
+        ).andReturn());
+    }
+    @Test
+    void updateBalance_failure() throws Exception {
         ResponseEntity<UserDto> responseEntity = new ResponseEntity<>(new UserDto(), HttpStatus.OK);
         when(userServiceConsumer.getUserById(any(String.class),any())).thenReturn(responseEntity);
         Throwable error = assertThrows(NestedServletException.class, () -> mock.perform(put(apiV1 + "/accountId1")
@@ -110,15 +161,6 @@ public class BalanceControllerTest {
                 .content(asJsonString(getBalanceDto()))
                 .header("userid", "1234")
         ).andReturn());
-    }
-    @Test
-    public void getAccounts() throws Exception
-    {
-
-        mock.perform(get("/api/v1/accounts/1234/balances")
-                        .contentType(MediaType.APPLICATION_JSON).header("userId", "1234"))
-                .andExpect(status().isOk())
-                .andDo(print());
     }
 
 
@@ -144,5 +186,14 @@ public class BalanceControllerTest {
         accountList.add(account1);
         accountList.add(account);
         return ResponseEntity.status(HttpStatus.OK).body(accountList);
+    }
+    public static BalanceDto getBalanceDto()
+    {
+        return  BalanceDto.builder()
+                ._id("1")
+                .accountId("123")
+                .amount(2000)
+                .currency(Currency.INR)
+                .build();
     }
 }

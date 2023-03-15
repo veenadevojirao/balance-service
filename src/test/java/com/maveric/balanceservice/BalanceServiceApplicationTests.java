@@ -1,11 +1,13 @@
 package com.maveric.balanceservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.maveric.balanceservice.dto.AccountDto;
 import com.maveric.balanceservice.dto.BalanceDto;
 import com.maveric.balanceservice.dto.UserDto;
 import com.maveric.balanceservice.entity.Balance;
 import com.maveric.balanceservice.enums.Currency;
 
+import com.maveric.balanceservice.enums.Type;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -14,7 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public
-class BalanceServiceApplicationTests {
+class
+BalanceServiceApplicationTests {
 
 	public static final String apiV1 = "/api/v1/accounts/1234/balances";
 	public static final String invalidApiV1 = "/api/v1/accounts/0000/balances/0000";
@@ -47,6 +50,14 @@ class BalanceServiceApplicationTests {
 				.email("maveric@gmail.com")
 				.id("1234")
 				.build();
+	}
+	public static AccountDto getAccountDto(){
+//	AccountDto accountDto=new AccountDto();
+		AccountDto accountDto = AccountDto.builder().build();
+		accountDto.set_id("1234");
+		accountDto.setCustomerId("1234");
+
+		return accountDto;
 	}
 	public static String asJsonString(final Object obj) {
 		try {

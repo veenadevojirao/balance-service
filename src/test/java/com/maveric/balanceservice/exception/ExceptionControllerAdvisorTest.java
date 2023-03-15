@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ExceptionControllerAdvisorTest {
+class ExceptionControllerAdvisorTest {
     private  ExceptionControllerAdvisor controllerAdvisor = new ExceptionControllerAdvisor();
     @Test
     void shouldReturnErrorWhenAccountMismatch() {

@@ -63,7 +63,7 @@ public class BalanceController {
 
             balanceService.deleteBalanceByAccountId(accountId, balanceId);
 
-            return new ResponseEntity<>("Balance deleted successfully", HttpStatus.OK);
+            return new ResponseEntity<>("Balances deleted successfully", HttpStatus.OK);
         }
         else{
             throw new CustomerIDNotFoundExistsException(Constants.NOT_AUTHORIZED_USER);
@@ -116,7 +116,7 @@ public class BalanceController {
         AccountDto accountDto = accountFeignService.getAccount(headerUserId, accountId, headerUserId);
         if (accountDto != null) {
             balanceService.deleteBalanceByAccountId(accountId);
-            log.info("Balance deleted successfully");
+            log.info("Balance deleted successfully For This AccountId");
             return new ResponseEntity<>("Balance deleted successfully", HttpStatus.OK);
         } else {
             throw new CustomerIDNotFoundExistsException(Constants.NOT_AUTHORIZED_USER);

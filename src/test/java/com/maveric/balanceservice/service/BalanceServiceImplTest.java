@@ -26,7 +26,7 @@ import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 
-public class BalanceServiceTest {
+ class BalanceServiceImplTest {
     @InjectMocks
     private BalanceServiceImpl balanceService;
 
@@ -57,7 +57,7 @@ public class BalanceServiceTest {
     }
     @Test
 
-    void deleteBalance() throws AccountIdMismatchException {
+    void deleteBalanceByAccountId() throws AccountIdMismatchException {
         when(repository.findById("2")).thenReturn(Optional.of(getBalance()));
         willDoNothing().given(repository).deleteById("2");
         String balanceDto = balanceService.deleteBalanceByAccountId("123","2");
@@ -81,7 +81,7 @@ when(repository.save(any())).thenReturn(getBalance());
         Throwable error = assertThrows(BalanceNotFoundException.class,()->balanceService.updateBalance("123","2",getBalanceDto()));//NOSONAR
         assertEquals("BalanceId is not Exisists For 2",error.getMessage());    }
     @Test
-    void getBalanceByAccountId() {
+    void getBalanceIdByAccountId() {
         when(repository.findByAccountId("1234")).thenReturn(getBalance());
         when(mapper.entityToDto(any(Balance.class))).thenReturn(getBalanceDto());
         BalanceDto balanceDto = balanceService.getBalanceByAccountId("1234");

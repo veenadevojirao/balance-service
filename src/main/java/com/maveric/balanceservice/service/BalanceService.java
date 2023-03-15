@@ -7,7 +7,7 @@ import com.maveric.balanceservice.exception.AccountIdMismatchException;
 
 import com.maveric.balanceservice.exception.BalanceIdNotFoundException;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 public interface BalanceService {
 
